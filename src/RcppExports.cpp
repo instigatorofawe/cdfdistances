@@ -46,11 +46,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// wasserstein
+double wasserstein(XPtr<EmpiricalCDF> cdf1, XPtr<EmpiricalCDF> cdf2);
+RcppExport SEXP _cdfdistances_wasserstein(SEXP cdf1SEXP, SEXP cdf2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< XPtr<EmpiricalCDF> >::type cdf1(cdf1SEXP);
+    Rcpp::traits::input_parameter< XPtr<EmpiricalCDF> >::type cdf2(cdf2SEXP);
+    rcpp_result_gen = Rcpp::wrap(wasserstein(cdf1, cdf2));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_cdfdistances_cdf_from_obs", (DL_FUNC) &_cdfdistances_cdf_from_obs, 1},
     {"_cdfdistances_cdf_from_timing", (DL_FUNC) &_cdfdistances_cdf_from_timing, 2},
     {"_cdfdistances_eval_cdf", (DL_FUNC) &_cdfdistances_eval_cdf, 2},
+    {"_cdfdistances_wasserstein", (DL_FUNC) &_cdfdistances_wasserstein, 2},
     {NULL, NULL, 0}
 };
 

@@ -13,3 +13,7 @@ eval_cdf <- function(cdf, x) {
     .Call(`_cdfdistances_eval_cdf`, cdf, x)
 }
 
+wasserstein <- function(cdf1, cdf2) {
+    .Call(`_cdfdistances_wasserstein`, cdf1, cdf2)
+}
+

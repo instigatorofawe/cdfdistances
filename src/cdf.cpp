@@ -26,3 +26,9 @@ double eval_cdf(XPtr<EmpiricalCDF> cdf, double x) {
 double wasserstein(XPtr<EmpiricalCDF> cdf1, XPtr<EmpiricalCDF> cdf2) {
     return 0.0;
 }
+
+
+// [[Rcpp::export]]
+double ks(XPtr<EmpiricalCDF> cdf1, XPtr<EmpiricalCDF> cdf2) {
+    return 0.0;
+}
