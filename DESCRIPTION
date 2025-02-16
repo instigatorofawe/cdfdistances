@@ -1,11 +1,11 @@
 Package: cdfdistances
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Fast empirical CDF and distance computation
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Ran", "Liu",
+      email = "rliu20@stanford.edu",
       role = c("aut", "cre")
     )
   )
@@ -19,3 +19,6 @@ LinkingTo:
     Rcpp
 Imports: 
     Rcpp
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
