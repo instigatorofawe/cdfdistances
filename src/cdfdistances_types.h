@@ -4,7 +4,7 @@
 #include <vector>
 using std::vector;
 
-class EmpiricalCDF {
+struct EmpiricalCDF {
     vector<double> breaks;
     vector<double> values;
 };

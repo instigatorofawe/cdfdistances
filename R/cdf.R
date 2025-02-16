@@ -2,6 +2,7 @@
 cdf_obs = function(obs) {
     cdf = cdf_from_obs(obs)
     result = list(
+        cdf = cdf,
         eval = function(x) eval_cdf(cdf, x)
     )
     result
@@ -11,6 +12,7 @@ cdf_obs = function(obs) {
 cdf_timing = function(t, obs) {
     cdf = cdf_from_timing(t, obs)
     result = list(
+        cdf = cdf,
         eval = function(x) eval_cdf(cdf, x)
     )
     result

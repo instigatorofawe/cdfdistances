@@ -17,3 +17,7 @@ wasserstein <- function(cdf1, cdf2) {
     .Call(`_cdfdistances_wasserstein`, cdf1, cdf2)
 }
 
+ks <- function(cdf1, cdf2) {
+    .Call(`_cdfdistances_ks`, cdf1, cdf2)
+}
+
