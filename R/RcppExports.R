@@ -28,6 +28,13 @@ eval_cdf <- function(cdf, x) {
     .Call(`_cdfdistances_eval_cdf`, cdf, x)
 }
 
+#' wasserstein
+#'
+#' Computes the 1-Wasserstein metric between two empirical CDFs
+#' @param cdf1 An XPtr to an EmpiricalCDF object
+#' @param cdf2 An XPtr to an EmpiricalCDF object
+#' @return The 1-Wasserstein distance between the two CDFs
+#' @export
 wasserstein <- function(cdf1, cdf2) {
     .Call(`_cdfdistances_wasserstein`, cdf1, cdf2)
 }

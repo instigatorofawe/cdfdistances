@@ -2,5 +2,6 @@
 
 export(cdf_obs)
 export(cdf_timing)
+export(wasserstein)
 importFrom(Rcpp,sourceCpp)
 useDynLib(cdfdistances, .registration = TRUE)

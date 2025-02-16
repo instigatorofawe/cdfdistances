@@ -82,6 +82,13 @@ double eval_cdf(XPtr<EmpiricalCDF> cdf, double x) {
     }
 }
 
+//' wasserstein
+//'
+//' Computes the 1-Wasserstein metric between two empirical CDFs
+//' @param cdf1 An XPtr to an EmpiricalCDF object
+//' @param cdf2 An XPtr to an EmpiricalCDF object
+//' @return The 1-Wasserstein distance between the two CDFs
+//' @export
 // [[Rcpp::export]]
 double wasserstein(XPtr<EmpiricalCDF> cdf1, XPtr<EmpiricalCDF> cdf2) {
     vector<double> merged_breaks;
@@ -108,7 +115,6 @@ double wasserstein(XPtr<EmpiricalCDF> cdf1, XPtr<EmpiricalCDF> cdf2) {
 
     return result;
 }
-
 
 // [[Rcpp::export]]
 double ks(XPtr<EmpiricalCDF> cdf1, XPtr<EmpiricalCDF> cdf2) {
