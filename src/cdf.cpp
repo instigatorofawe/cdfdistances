@@ -8,24 +8,57 @@ using Rcpp::XPtr;
 
 using std::endl;
 
+//' cdf_from_obs
+//'
+//' Create an empirical CDF from observations
+//' @param obs A numeric vector of observations
+//' @return An XPtr to an EmpiricalCDF object
 // [[Rcpp::export]]
 XPtr<EmpiricalCDF> cdf_from_obs(NumericVector obs) {
     size_t n = obs.size();
-    auto sorted_obs = obs.sort();
-    EmpiricalCDF* cdf = new EmpiricalCDF;
-    cdf->breaks = vector<double>(sorted_obs.begin(), sorted_obs.end());
-    cdf->values.resize(obs.size());
+    EmpiricalCDF* cdf = new EmpiricalCDF{
+        vector<double>(obs.begin(), obs.end()),
+        vector<double>(n)
+    };
+    std::sort(cdf->breaks.begin(), cdf->breaks.end());
     std::iota(cdf->values.begin(), cdf->values.end(), 1.0);
     std::transform(cdf->values.begin(), cdf->values.end(), cdf->values.begin(), [&](double x){ return x / n;});
     return XPtr<EmpiricalCDF>(cdf);
 }
 
+//' cdf_from_timing
+//'
+//' Create an empirical CDF from timings and dosages
+//' @param t A numeric vector of timings
+//' @param obs A numeric vector of dosages
 // [[Rcpp::export]]
 XPtr<EmpiricalCDF> cdf_from_timing(NumericVector t, NumericVector obs) {
-    EmpiricalCDF* cdf = new EmpiricalCDF;
+    size_t n = obs.size();
+    double total = std::reduce(obs.begin(), obs.end());
+    vector<size_t> indices(n);
+    std::iota(indices.begin(), indices.end(), 0);
+    std::sort(indices.begin(), indices.end(), [&](size_t i, size_t j){ return t[i] < t[j]; });
+
+    EmpiricalCDF* cdf = new EmpiricalCDF{
+        vector<double>(n),
+        vector<double>(n)
+    };
+
+    std::transform(indices.begin(), indices.end(), cdf->breaks.begin(), [&](size_t i){ return t[i]; });
+    double current = 0;
+    std::transform(indices.begin(), indices.end(), cdf->values.begin(), [&](size_t i) {
+        current += obs[i];
+        return current / total;
+    });
+
     return XPtr<EmpiricalCDF>(cdf);
 }
 
+//' eval_cdf
+//'
+//' Evaluate the CDF at a given point
+//' @param cdf An XPtr to an EmpiricalCDF object
+//' @param x The point at which to evaluate the CDF
 // [[Rcpp::export]]
 double eval_cdf(XPtr<EmpiricalCDF> cdf, double x) {
     // Binary search
