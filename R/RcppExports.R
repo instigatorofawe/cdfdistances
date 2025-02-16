@@ -19,6 +19,11 @@ cdf_from_timing <- function(t, obs) {
     .Call(`_cdfdistances_cdf_from_timing`, t, obs)
 }
 
+#' eval_cdf
+#'
+#' Evaluate the CDF at a given point
+#' @param cdf An XPtr to an EmpiricalCDF object
+#' @param x The point at which to evaluate the CDF
 eval_cdf <- function(cdf, x) {
     .Call(`_cdfdistances_eval_cdf`, cdf, x)
 }

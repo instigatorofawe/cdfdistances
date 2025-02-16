@@ -84,7 +84,29 @@ double eval_cdf(XPtr<EmpiricalCDF> cdf, double x) {
 
 // [[Rcpp::export]]
 double wasserstein(XPtr<EmpiricalCDF> cdf1, XPtr<EmpiricalCDF> cdf2) {
-    return 0.0;
+    vector<double> merged_breaks;
+    merged_breaks.reserve(cdf1->breaks.size() + cdf2->breaks.size());
+    std::merge(cdf1->breaks.begin(), cdf1->breaks.end(), cdf2->breaks.begin(), cdf2->breaks.end(), std::back_inserter(merged_breaks));
+
+    size_t left_index = 0;
+    size_t right_index = 0;
+    double result = 0;
+
+    for (size_t i = 0; i + 1 < merged_breaks.size(); i++) {
+        double width = merged_breaks[i+1] - merged_breaks[i];
+        while (left_index < cdf1->breaks.size() && cdf1->breaks[left_index] <= merged_breaks[i]) {
+            left_index++;
+        }
+        while (right_index < cdf2->breaks.size() && cdf2->breaks[right_index] <= merged_breaks[i]) {
+            right_index++;
+        }
+
+        double left_value = left_index == 0 ? 0.0 : cdf1->values[left_index-1];
+        double right_value = right_index == 0 ? 0.0 : cdf2->values[right_index-1];
+        result += std::abs(left_value - right_value) * width;
+    }
+
+    return result;
 }
 
 
